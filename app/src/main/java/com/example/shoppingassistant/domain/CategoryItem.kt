@@ -1,10 +1,10 @@
 package com.example.shoppingassistant.domain
 
 data class CategoryItem(
-    val id:Int = UNDEFINED_ID,
     val name:String,
     val count:Int,
-    val enabled:Boolean
+    val enabled:Boolean,
+    var id:Int = UNDEFINED_ID
 )
 {
     companion object {
