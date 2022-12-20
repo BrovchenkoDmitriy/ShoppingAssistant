@@ -14,7 +14,7 @@ data class ShopItemDbModel(
     val category: String,
     val price: Double,
     val marketName:String,
-    val date: Calendar,
+    val date: Long,
     val lat:Double,
     val lng:Double
 )

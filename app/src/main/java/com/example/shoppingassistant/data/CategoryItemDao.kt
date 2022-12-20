@@ -1,5 +1,6 @@
 package com.example.shoppingassistant.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -7,15 +8,15 @@ import androidx.room.Query
 
 @Dao
 interface CategoryItemDao {
-    @Query("SELECT * FROM shop_items")
-    fun getCategoryItemList(category: String): List<CategoryItemDbModel>
+    @Query("SELECT * FROM category_items")
+    fun getCategoryItemList(): LiveData<List<CategoryItemDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addCategoryItem(shopItemDbModel: CategoryItemDbModel)
+    suspend fun addCategoryItem(categoryItemDbModel: CategoryItemDbModel)
 
-    @Query("DELETE FROM shop_items WHERE id=:shopItemId")
-    fun deleteCategoryItem(shopItemId: Int)
+    @Query("DELETE FROM category_items WHERE id=:categoryItemId")
+    suspend fun deleteCategoryItem(categoryItemId: Int)
 
-    @Query("SELECT*FROM shop_items WHERE id=:shopItemId LIMIT 1")
-    fun getCategoryItem(shopItemId: Int): CategoryItemDbModel
+    @Query("SELECT*FROM category_items WHERE id=:categoryItemId LIMIT 1")
+    suspend fun getCategoryItem(categoryItemId: Int): CategoryItemDbModel
 }
