@@ -7,7 +7,7 @@ data class ShopItem(
     val category: String,
     val price: Double,
     val marketName:String,
-    val date: Calendar,
+    val date: Date,
     val lat:Double,
     val lng:Double,
     var id: Int= UNDEFINED_ID

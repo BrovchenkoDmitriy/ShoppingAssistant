@@ -4,7 +4,7 @@ import com.example.shoppingassistant.domain.Repository
 import com.example.shoppingassistant.domain.ShopItem
 
 class GetShopItemUseCase(private val repository: Repository){
-    fun getShopItem(id:Int): ShopItem {
+    suspend fun getShopItem(id:Int): ShopItem {
         return repository.getShopItem(id)
     }
 }

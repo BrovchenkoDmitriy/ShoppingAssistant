@@ -4,7 +4,7 @@ import com.example.shoppingassistant.domain.Repository
 import com.example.shoppingassistant.domain.ShopItem
 
 class DeleteShopItem(private val repository: Repository) {
-    fun deleteShopItem(shopItem: ShopItem){
+    suspend fun deleteShopItem(shopItem: ShopItem){
         repository.deleteShopItem(shopItem)
     }
 }
