@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Shopping assistant</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="welcome_blank_fragment">Здравствуйте, я ваш помощник для покупок.</string>
+    <string name="shopping_list">Список покупок</string>
+    <string name="notes">Заметки</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="add_position_to_shopping_list">Добавить позицию для покупок</string>
+
+
 </resources>
