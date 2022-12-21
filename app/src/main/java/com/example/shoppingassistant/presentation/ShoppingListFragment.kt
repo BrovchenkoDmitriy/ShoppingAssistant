@@ -1,26 +1,24 @@
 package com.example.shoppingassistant.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.shoppingassistant.R
+import androidx.fragment.app.Fragment
 import com.example.shoppingassistant.databinding.FragmentShoppingListBinding
-import java.lang.RuntimeException
 
 class ShoppingListFragment : Fragment() {
 
     private var _binding: FragmentShoppingListBinding? = null
-    private val binding: FragmentShoppingListBinding =
-        _binding ?: throw RuntimeException("FragmentShoppingListBinding is null")
+    private val binding: FragmentShoppingListBinding
+       get() = _binding ?: throw RuntimeException("FragmentShoppingListBinding is null")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentShoppingListBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentShoppingListBinding.inflate(inflater,container,false)
         return binding.root
     }
 
