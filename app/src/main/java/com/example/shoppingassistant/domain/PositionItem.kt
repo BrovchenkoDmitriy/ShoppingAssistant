@@ -1,6 +1,6 @@
 package com.example.shoppingassistant.domain
 
-data class CategoryItem(
+data class PositionItem(
     val name:String,
     val count:Int,
     val enabled:Boolean,

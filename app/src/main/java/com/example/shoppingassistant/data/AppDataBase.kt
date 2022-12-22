@@ -6,11 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities = [ShopItemDbModel::class, CategoryItemDbModel::class], version = 1)
+@Database(entities = [ShopItemDbModel::class, PositionItemDbModel::class], version = 1)
 abstract class AppDataBase : RoomDatabase() {
 
     abstract fun shopItemDao(): ShopItemDao
-    abstract fun categoryItemDao():CategoryItemDao
+    abstract fun positionItemDao():PositionItemDao
 
     companion object {
 

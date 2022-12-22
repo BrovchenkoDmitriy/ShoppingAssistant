@@ -2,17 +2,17 @@ package com.example.shoppingassistant.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.example.shoppingassistant.data.mappers.CategoryItemMapper
+import com.example.shoppingassistant.data.mappers.PositionItemMapper
 import com.example.shoppingassistant.data.mappers.ShopItemMapper
-import com.example.shoppingassistant.domain.CategoryItem
+import com.example.shoppingassistant.domain.PositionItem
 import com.example.shoppingassistant.domain.Repository
 import com.example.shoppingassistant.domain.ShopItem
 
 class RepositoryImpl(
     private val shopItemDao: ShopItemDao,
-    private val categoryItemDao: CategoryItemDao,
+    private val positionItemDao: PositionItemDao,
     private val shopItemMapper: ShopItemMapper,
-    private val categoryItemMapper: CategoryItemMapper
+    private val positionItemMapper: PositionItemMapper
 ):Repository {
     override suspend fun getShopItem(shopItemId: Int): ShopItem {
         val shopItemDbModel = shopItemDao.getShopItem(shopItemId)
@@ -43,30 +43,30 @@ class RepositoryImpl(
 
 
 
-    override suspend fun getCategoryItem(categoryItemId: Int): CategoryItem {
-        val categoryItemDbModel = categoryItemDao.getCategoryItem(categoryItemId)
-        return categoryItemMapper.mapDbModelToEntity(categoryItemDbModel)
+    override suspend fun getPositionItem(positionItemId: Int): PositionItem {
+        val positionItemDbModel = positionItemDao.getPositionItem(positionItemId)
+        return positionItemMapper.mapDbModelToEntity(positionItemDbModel)
     }
 
-    override suspend fun addCategoryItem(categoryItem: CategoryItem) {
-        val categoryItemDbModel = categoryItemMapper.mapEntityToDbModel(categoryItem)
-        categoryItemDao.addCategoryItem(categoryItemDbModel)
+    override suspend fun addPositionItem(positionItem: PositionItem) {
+        val positionItemDbModel = positionItemMapper.mapEntityToDbModel(positionItem)
+        positionItemDao.addPositionItem(positionItemDbModel)
     }
 
-    override suspend fun deleteCategoryItem(categoryItem: CategoryItem) {
-       val categoryItemDbModel = categoryItemMapper.mapEntityToDbModel(categoryItem)
-        categoryItemDao.deleteCategoryItem(categoryItemDbModel.id)
+    override suspend fun deletePositionItem(positionItem: PositionItem) {
+       val positionItemDbModel = positionItemMapper.mapEntityToDbModel(positionItem)
+        positionItemDao.deletePositionItem(positionItemDbModel.id)
     }
 
-    override suspend fun upgradeCategoryItem(categoryItem: CategoryItem) {
-        val categoryItemDbModel = categoryItemMapper.mapEntityToDbModel(categoryItem)
-        categoryItemDao.addCategoryItem(categoryItemDbModel)
+    override suspend fun upgradePositionItem(positionItem: PositionItem) {
+        val positionItemDbModel = positionItemMapper.mapEntityToDbModel(positionItem)
+        positionItemDao.addPositionItem(positionItemDbModel)
     }
 
-    override fun getCategoryItemList(): LiveData<List<CategoryItem>> {
-        val categoryItemDbModelList = categoryItemDao.getCategoryItemList()
-        return Transformations.map(categoryItemDbModelList){
-            categoryItemMapper.mapDbModelListToEntityList(it)
+    override fun getPositionItemList(): LiveData<List<PositionItem>> {
+        val positionItemDbModelList = positionItemDao.getPositionItemList()
+        return Transformations.map(positionItemDbModelList){
+            positionItemMapper.mapDbModelListToEntityList(it)
         }
     }
 }
