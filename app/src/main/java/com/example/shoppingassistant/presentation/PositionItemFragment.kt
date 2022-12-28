@@ -103,6 +103,13 @@ class PositionItemFragment : Fragment() {
 
     private fun launchEditMode() {
         viewModel.getPositionItem(positionItemId)
+        viewModel.positionItem.observe(viewLifecycleOwner){
+            val name = it.name
+            val count = it.count.toString()
+            binding.etName.setText(name)
+            binding.etCount.setText(count)
+        }
+
         binding.saveButton.setOnClickListener {
             viewModel.upgradePositionItem(
                 binding.etName.text?.toString(),
