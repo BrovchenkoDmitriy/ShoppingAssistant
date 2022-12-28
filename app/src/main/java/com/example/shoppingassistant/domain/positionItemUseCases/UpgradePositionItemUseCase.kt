@@ -1,4 +1,4 @@
-package com.example.shoppingassistant.domain.categoryItemUseCases
+package com.example.shoppingassistant.domain.positionItemUseCases
 
 import com.example.shoppingassistant.domain.PositionItem
 import com.example.shoppingassistant.domain.Repository

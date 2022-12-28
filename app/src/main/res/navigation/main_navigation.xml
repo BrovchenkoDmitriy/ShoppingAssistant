@@ -26,5 +26,34 @@
         android:id="@+id/shoppingListFragment"
         android:name="com.example.shoppingassistant.presentation.ShoppingListFragment"
         android:label="fragment_shopping_list"
-        tools:layout="@layout/fragment_note_list" />
+        tools:layout="@layout/fragment_note_list" >
+        <action
+            android:id="@+id/action_shoppingListFragment_to_positionItemFragment_add_mode"
+            app:destination="@id/positionItemFragment" />
+        <action
+            android:id="@+id/action_shoppingListFragment_to_positionItemFragment_edit_mode"
+            app:destination="@id/positionItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/positionItemFragment"
+        android:name="com.example.shoppingassistant.presentation.PositionItemFragment"
+        android:label="fragment_position_item"
+        tools:layout="@layout/fragment_position_item" >
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="count"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="enabled"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

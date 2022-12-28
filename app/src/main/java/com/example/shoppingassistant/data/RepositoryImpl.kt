@@ -1,5 +1,6 @@
 package com.example.shoppingassistant.data
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.example.shoppingassistant.data.mappers.PositionItemMapper
@@ -8,12 +9,14 @@ import com.example.shoppingassistant.domain.PositionItem
 import com.example.shoppingassistant.domain.Repository
 import com.example.shoppingassistant.domain.ShopItem
 
-class RepositoryImpl(
-    private val shopItemDao: ShopItemDao,
-    private val positionItemDao: PositionItemDao,
-    private val shopItemMapper: ShopItemMapper,
-    private val positionItemMapper: PositionItemMapper
-):Repository {
+class RepositoryImpl(application: Application) :Repository {
+
+    private val shopItemDao =  AppDataBase.getInstance(application).shopItemDao()
+    private val positionItemDao = AppDataBase.getInstance(application).positionItemDao()
+    private val shopItemMapper = ShopItemMapper()
+    private val positionItemMapper = PositionItemMapper()
+
+
     override suspend fun getShopItem(shopItemId: Int): ShopItem {
         val shopItemDbModel = shopItemDao.getShopItem(shopItemId)
        return shopItemMapper.mapDbModelToEntity(shopItemDbModel)
