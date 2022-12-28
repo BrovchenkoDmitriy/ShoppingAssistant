@@ -6,6 +6,16 @@
     <string name="notes">Заметки</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="add_position_to_shopping_list">Добавить позицию для покупок</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Название позиции</string>
+    <string name="count">Количество</string>
+    <string name="save">Сохранить</string>
+
+    <string name="purchased">К у п л е н о</string>
+
+    <string name="error_input_name">Name can not be a empty</string>
+    <string name="error_input_count">Count should be 1 or more</string>
 
 
 </resources>
