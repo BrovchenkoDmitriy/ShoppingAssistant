@@ -6,19 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="10dp"
-    app:strokeColor="@color/black"
+    app:strokeColor="@color/dark_grey"
     app:strokeWidth="1dp"
     app:cardUseCompatPadding="true"
     >
+
     <TextView
         android:id="@+id/tv_purchased"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:text="@string/purchased"
         android:textColor="@color/red"
         android:textSize="24sp"
-        android:text="@string/purchased"
-        android:visibility = "gone"
+        android:visibility="visible"
 
         />
 
@@ -33,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text = "Сосиски"
-            android:textColor = "@color/black"
+            android:textColor = "@color/dark_grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text = "3"
-            android:textColor = "@color/black"
+            android:textColor = "@color/dark_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

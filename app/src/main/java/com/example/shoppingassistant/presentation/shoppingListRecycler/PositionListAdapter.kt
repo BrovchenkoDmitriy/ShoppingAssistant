@@ -1,14 +1,9 @@
 package com.example.shoppingassistant.presentation.shoppingListRecycler
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import com.example.shoppingassistant.R
-import com.example.shoppingassistant.databinding.PositionItemBinding
 import com.example.shoppingassistant.domain.PositionItem
 
 class PositionListAdapter :
@@ -18,48 +13,47 @@ class PositionListAdapter :
     var onPositionItemClickListener: ((PositionItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PositionItemViewHolder {
-        val binding = PositionItemBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return PositionItemViewHolder(binding)
+        val layout = when (viewType) {
+            NOT_PURCHASED_TYPE -> {
+                R.layout.position_item
+            }
+            PURCHASED_TYPE -> {
+                R.layout.position_item_purchased
+            }
+            else -> throw RuntimeException("Unknown view type: $viewType")
+        }
+
+        val view = LayoutInflater.from(parent.context).inflate(layout,parent,false)
+        return PositionItemViewHolder(view)
     }
 
     //привязываем к вьюшкам информацию
     override fun onBindViewHolder(viewHolder: PositionItemViewHolder, position: Int) {
         val positionItem = getItem(position)
-        val binding = viewHolder.binding
 
-        binding.tvPositionItemName.text = positionItem.name
-        binding.tvPositionItemCount.text = positionItem.count.toString()
-        if (!positionItem.enabled) {
-            binding.tvPurchased.visibility = View.VISIBLE
-            changeStatusToPurchased(binding.tvPositionItemName, viewHolder.itemView.context)
-            changeStatusToPurchased(binding.tvPositionItemCount, viewHolder.itemView.context)
-            binding.itemFrame.strokeColor = ContextCompat.getColor(viewHolder.itemView.context, R.color.dark_grey)
+        viewHolder.tvPositionItemName.text = positionItem.name
+        viewHolder.tvPositionItemCount.text = positionItem.count.toString()
 
-        } else {
-            binding.tvPurchased.visibility = View.GONE
-            changeStatusToNotPurchased(binding.tvPositionItemName, viewHolder.itemView.context)
-            changeStatusToNotPurchased(binding.tvPositionItemCount, viewHolder.itemView.context)
-            binding.itemFrame.strokeColor = ContextCompat.getColor(viewHolder.itemView.context, R.color.black)
-        }
-
-        binding.root.setOnLongClickListener {
+        viewHolder.view.setOnLongClickListener {
             onPositionItemLongClickListener?.invoke(positionItem)
             true
         }
-        binding.root.setOnClickListener {
+        viewHolder.view.setOnClickListener {
             onPositionItemClickListener?.invoke(positionItem)
         }
         viewHolder.itemView.context
     }
 
-    private fun changeStatusToPurchased(textView: TextView, context: Context){
-        textView.setTextColor(ContextCompat.getColor(context, R.color.dark_grey))
+    override fun getItemViewType(position: Int): Int {
+        return if (getItem(position).enabled) {
+            NOT_PURCHASED_TYPE
+        } else {
+            PURCHASED_TYPE
+        }
     }
-    private fun changeStatusToNotPurchased(textView: TextView, context: Context){
-        textView.setTextColor(ContextCompat.getColor(context, R.color.black))
+
+    companion object {
+        const val NOT_PURCHASED_TYPE = 100
+        const val PURCHASED_TYPE = 101
     }
 }
