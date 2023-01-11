@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class PositionItemViewModel(application: Application) : AndroidViewModel(application) {
 
     val repository = RepositoryImpl(application)
-    private val upgradeShopItemUseCase = UpgradePositionItemUseCase(repository)
+    private val upgradePositionItemUseCase = UpgradePositionItemUseCase(repository)
     private val addPositionItemUseCase = AddPositionItemUseCase(repository)
     private val getPositionItemUseCase = GetPositionItemUseCase(repository)
 
@@ -65,7 +65,7 @@ class PositionItemViewModel(application: Application) : AndroidViewModel(applica
             _positionItem.value?.let {
                 viewModelScope.launch {
                     val item = it.copy(name = name, count = count)
-                    upgradeShopItemUseCase.upgradePositionItem(item)
+                    upgradePositionItemUseCase.upgradePositionItem(item)
                     finish()
                 }
             }

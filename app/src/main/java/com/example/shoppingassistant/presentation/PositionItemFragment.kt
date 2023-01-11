@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.shoppingassistant.R
 import com.example.shoppingassistant.databinding.FragmentPositionItemBinding
 import com.example.shoppingassistant.domain.PositionItem
 
@@ -69,11 +70,12 @@ class PositionItemFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.resetInputNameError()
+                binding.tilName.error = ""
             }
 
             override fun afterTextChanged(s: Editable?) {
-//                if (s?.isBlank() == true) binding.tilName.error =
-//                    getString(R.string.error_input_name)
+                if (s?.isBlank() == true) binding.tilName.error =
+                    getString(R.string.error_input_name)
             }
         })
 
@@ -84,12 +86,13 @@ class PositionItemFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.resetInputCountError()
+                binding.tilCount.error = ""
             }
 
             override fun afterTextChanged(s: Editable?) {
-//                if ((s == null) || s.isBlank() || (s.toString().toInt() <= 0)) {
-//                    binding.tilCount.error = getString(R.string.error_input_count)
-//                }
+                if ((s == null) || s.isBlank() || (s.toString().toInt() <= 0)) {
+                    binding.tilCount.error = getString(R.string.error_input_count)
+                }
             }
         })
     }
