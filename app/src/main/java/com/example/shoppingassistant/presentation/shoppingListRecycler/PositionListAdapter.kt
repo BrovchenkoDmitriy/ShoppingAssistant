@@ -41,7 +41,7 @@ class PositionListAdapter :
         viewHolder.view.setOnClickListener {
             onPositionItemClickListener?.invoke(positionItem)
         }
-        viewHolder.itemView.context
+        //viewHolder.view.context
     }
 
     override fun getItemViewType(position: Int): Int {
