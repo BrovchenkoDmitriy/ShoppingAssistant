@@ -1,22 +1,17 @@
-package com.example.shoppingassistant.presentation
+package com.example.shoppingassistant.presentation.shoppingList
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingassistant.R
-import com.example.shoppingassistant.databinding.FragmentPositionItemBinding
 import com.example.shoppingassistant.databinding.FragmentShoppingListBinding
-import com.example.shoppingassistant.presentation.shoppingListRecycler.PositionListAdapter
-import kotlin.concurrent.thread
+import com.example.shoppingassistant.presentation.positionItem.PositionItemFragment
+import com.example.shoppingassistant.presentation.shoppingList.shoppingListRecycler.PositionListAdapter
 
 class ShoppingListFragment : Fragment() {
 

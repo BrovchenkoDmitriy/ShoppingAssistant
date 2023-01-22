@@ -1,4 +1,4 @@
-package com.example.shoppingassistant.presentation
+package com.example.shoppingassistant.presentation.noteList
 
 import android.os.Bundle
 import android.view.LayoutInflater

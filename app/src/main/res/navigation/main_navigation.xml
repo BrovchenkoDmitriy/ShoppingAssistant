@@ -11,32 +11,24 @@
         android:label="mainMenuFragment"
         tools:layout="@layout/fragment_main_menu">
         <action
-            android:id="@+id/action_mainMenuFragment_to_shoppingListFragment"
-            app:destination="@id/shoppingListFragment" />
-        <action
             android:id="@+id/action_mainMenuFragment_to_noteListFragment"
             app:destination="@id/noteListFragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_shoppingListFragment"
+            app:destination="@id/shoppingListFragment" />
     </fragment>
     <fragment
         android:id="@+id/noteListFragment"
-        android:name="com.example.shoppingassistant.presentation.NoteListFragment"
+        android:name="com.example.shoppingassistant.presentation.noteList.NoteListFragment"
         android:label="fragment_note_list"
-        tools:layout="@layout/fragment_note_list" />
-    <fragment
-        android:id="@+id/shoppingListFragment"
-        android:name="com.example.shoppingassistant.presentation.ShoppingListFragment"
-        android:label="fragment_shopping_list"
         tools:layout="@layout/fragment_note_list" >
         <action
-            android:id="@+id/action_shoppingListFragment_to_positionItemFragment_add_mode"
-            app:destination="@id/positionItemFragment" />
-        <action
-            android:id="@+id/action_shoppingListFragment_to_positionItemFragment_edit_mode"
-            app:destination="@id/positionItemFragment" />
+            android:id="@+id/action_noteListFragment_to_noteItemFragment"
+            app:destination="@id/noteItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/positionItemFragment"
-        android:name="com.example.shoppingassistant.presentation.PositionItemFragment"
+        android:name="com.example.shoppingassistant.presentation.positionItem.PositionItemFragment"
         android:label="fragment_position_item"
         tools:layout="@layout/fragment_position_item" >
         <argument
@@ -56,4 +48,18 @@
             app:argType="integer"
             android:defaultValue="0" />
     </fragment>
+    <fragment
+        android:id="@+id/shoppingListFragment"
+        android:name="com.example.shoppingassistant.presentation.shoppingList.ShoppingListFragment"
+        android:label="fragment_shopping_list"
+        tools:layout="@layout/fragment_shopping_list" >
+        <action
+            android:id="@+id/action_shoppingListFragment_to_positionItemFragment"
+            app:destination="@id/positionItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noteItemFragment"
+        android:name="com.example.shoppingassistant.presentation.noteItem.NoteItemFragment"
+        android:label="fragment_note_item"
+        tools:layout="@layout/fragment_note_item" />
 </navigation>
