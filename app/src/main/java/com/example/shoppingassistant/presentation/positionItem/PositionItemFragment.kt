@@ -1,4 +1,4 @@
-package com.example.shoppingassistant.presentation
+package com.example.shoppingassistant.presentation.positionItem
 
 import android.content.Context
 import android.os.Bundle
