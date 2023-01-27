@@ -37,8 +37,9 @@ class RepositoryImpl(application: Application) :Repository {
         shopItemDao.addShopItem(shopItemDbModel)
     }
 
-    override fun getShopItemList(category: String): LiveData<List<ShopItem>> {
-        val shopItemDbModelList = shopItemDao.getShopItemList(category)
+
+    override fun getShopItemList(): LiveData<List<ShopItem>> {
+        val shopItemDbModelList = shopItemDao.getShopItemList()
         return Transformations.map(shopItemDbModelList){
             shopItemMapper.mapDbModelListToEntityList(it)
         }

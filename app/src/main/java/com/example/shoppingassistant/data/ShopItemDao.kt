@@ -8,8 +8,10 @@ import androidx.room.Query
 
 @Dao
 interface ShopItemDao {
-    @Query("SELECT * FROM shop_items WHERE category=:category ")
-    fun getShopItemList(category: String): LiveData<List<ShopItemDbModel>>
+//    @Query("SELECT * FROM shop_items WHERE category=:category ")
+//    fun getShopItemList(category: String): LiveData<List<ShopItemDbModel>>
+    @Query("SELECT * FROM shop_items")
+    fun getShopItemList(): LiveData<List<ShopItemDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addShopItem(shopItemDbModel: ShopItemDbModel)

@@ -7,7 +7,7 @@ interface Repository {
     suspend fun addShopItem(shopItem: ShopItem)
     suspend fun deleteShopItem(shopItem: ShopItem)
     suspend fun upgradeShopItem(shopItem: ShopItem)
-    fun getShopItemList(category:String):LiveData<List<ShopItem>>
+    fun getShopItemList():LiveData<List<ShopItem>>
 
     suspend fun getPositionItem(positionItemId: Int):PositionItem
     suspend fun addPositionItem(positionItem: PositionItem)
