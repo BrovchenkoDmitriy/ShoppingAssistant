@@ -17,5 +17,11 @@
     <string name="error_input_name">Name can not be a empty</string>
     <string name="error_input_count">Count should be 1 or more</string>
 
+    <string name="enter_note_item_name">Название продукта</string>
+    <string name="enter_note_item_category">Категория продукта</string>
+    <string name="enter_note_item_price">Цена продукта</string>
+    <string name="enter_market_name">Название магазина</string>
+    <string name="note_item_tittle">Карточка продукта</string>
+
 
 </resources>

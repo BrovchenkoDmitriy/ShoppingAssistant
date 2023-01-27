@@ -47,7 +47,7 @@
                     app:cardCornerRadius="10dp"
                     app:strokeColor="@color/black"
                     app:strokeWidth="1dp"
-                    tools:src="@drawable/location" />
+                    android:src="@drawable/location" />
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
