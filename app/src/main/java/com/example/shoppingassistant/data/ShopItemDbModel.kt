@@ -17,4 +17,7 @@ data class ShopItemDbModel(
     val date: Long,
     val lat:Double,
     val lng:Double
-)
+){
+    val photoFileName
+    get() = "IMG_$id.jpg"
+}

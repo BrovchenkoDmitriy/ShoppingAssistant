@@ -12,9 +12,10 @@ import com.example.shoppingassistant.domain.shopItemUseCases.AddShopItemUseCase
 import com.example.shoppingassistant.domain.shopItemUseCases.GetShopItemUseCase
 import com.example.shoppingassistant.domain.shopItemUseCases.UpgradeShopItemUseCase
 import kotlinx.coroutines.launch
+import java.io.File
 import java.util.*
 
-class NoteItemViewModel(application: Application):AndroidViewModel(application) {
+class NoteItemViewModel(application: Application) : AndroidViewModel(application) {
 
     val repository = RepositoryImpl(application)
     private val upgradeShopItemUseCase = UpgradeShopItemUseCase(repository)
@@ -34,6 +35,10 @@ class NoteItemViewModel(application: Application):AndroidViewModel(application) 
         get() = _errorInputData
 
 
+    fun getPhotoFile(shopItem: ShopItem): File {
+        return repository.getPhotoFile(shopItem)
+    }
+
     fun getShopItem(shopItemID: Int) {
         viewModelScope.launch {
             val item = getShopItemUseCase.getShopItem(shopItemID)
@@ -49,8 +54,8 @@ class NoteItemViewModel(application: Application):AndroidViewModel(application) 
         inputPrice: Double?,
         inputMarketName: String?,
         inputDate: Long,
-        lat:Double,
-        lng:Double
+        lat: Double,
+        lng: Double
     ) {
         val name = parseName(inputName)
         val category = parseCategory(inputCategory)
@@ -61,7 +66,17 @@ class NoteItemViewModel(application: Application):AndroidViewModel(application) 
 
         if (fieldsValid) {
             viewModelScope.launch {
-                addShopItemUseCase.addShopItem(ShopItem(name, category, price,marketName, date, lat, lng))
+                addShopItemUseCase.addShopItem(
+                    ShopItem(
+                        name,
+                        category,
+                        price,
+                        marketName,
+                        date,
+                        lat,
+                        lng
+                    )
+                )
                 //добавить метод закрытия фрагмента
                 finish()
             }
@@ -82,7 +97,12 @@ class NoteItemViewModel(application: Application):AndroidViewModel(application) 
         if (fieldsValid) {
             _shopItem.value?.let {
                 viewModelScope.launch {
-                    val item = it.copy(name = name, category = category, price = price, marketName = marketName)
+                    val item = it.copy(
+                        name = name,
+                        category = category,
+                        price = price,
+                        marketName = marketName
+                    )
                     upgradeShopItemUseCase.upgradeShopItem(item)
                     //добавить метод закрытия фрагмента
                     finish()
@@ -91,7 +111,12 @@ class NoteItemViewModel(application: Application):AndroidViewModel(application) 
         }
     }
 
-    private fun validateInput(name: String, category: String, price:Double, marketName:String): Boolean {
+    private fun validateInput(
+        name: String,
+        category: String,
+        price: Double,
+        marketName: String
+    ): Boolean {
         var result = true
         if (name.isBlank()) {
             _errorInputData.value = true
@@ -105,7 +130,7 @@ class NoteItemViewModel(application: Application):AndroidViewModel(application) 
             _errorInputData.value = true
             result = false
         }
-        if ((price*100).toInt() <= 0) {
+        if ((price * 100).toInt() <= 0) {
             _errorInputData.value = true
             result = false
         }
@@ -121,13 +146,14 @@ class NoteItemViewModel(application: Application):AndroidViewModel(application) 
         return category?.trim() ?: ""
     }
 
-    private fun parsePrice(inputCount: Double?): Double{
+    private fun parsePrice(inputCount: Double?): Double {
         return try {
             inputCount?.toString()?.trim()?.toDouble() ?: 0.0
         } catch (exception: Exception) {
             0.0
         }
     }
+
     private fun parseMarketName(marketName: String?): String {
         return marketName?.trim() ?: ""
     }
@@ -135,7 +161,6 @@ class NoteItemViewModel(application: Application):AndroidViewModel(application) 
     private fun finish() {
         _closeShopItemScreen.value = Unit
     }
-
 
 
 }

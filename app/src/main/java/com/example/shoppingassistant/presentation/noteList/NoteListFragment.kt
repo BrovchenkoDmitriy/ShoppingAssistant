@@ -25,11 +25,11 @@ class NoteListFragment : Fragment() {
     private val binding: FragmentNoteListBinding
         get() = _binding ?: throw RuntimeException("FragmentShoppingListBinding is null")
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentNoteListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -53,18 +53,18 @@ class NoteListFragment : Fragment() {
     private fun setupRecyclerView(){
         noteListAdapter = NoteListAdapter()
         binding.rvNoteList.adapter = noteListAdapter
-        setupClickListener()
+        //binding.rvNoteList.itemAnimator= DefaultItemAnimator()
+        setupItemClickListener()
         setupSwipeListener(binding.rvNoteList)
     }
 
-    private fun setupClickListener() {
+    private fun setupItemClickListener() {
         noteListAdapter.onPositionItemClickListener = {
             launchNoteItemFragment(NoteItemFragment.newInstanceEditItem(it.id))
         }
     }
 
     private fun launchNoteItemFragment(fragment: Fragment) {
-        // requireActivity().supportFragmentManager.popBackStack()
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.main_container, fragment)
             .addToBackStack(null).commit()

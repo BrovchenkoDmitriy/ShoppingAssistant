@@ -8,6 +8,7 @@ import com.example.shoppingassistant.data.mappers.ShopItemMapper
 import com.example.shoppingassistant.domain.PositionItem
 import com.example.shoppingassistant.domain.Repository
 import com.example.shoppingassistant.domain.ShopItem
+import java.io.File
 
 class RepositoryImpl(application: Application) :Repository {
 
@@ -15,6 +16,7 @@ class RepositoryImpl(application: Application) :Repository {
     private val positionItemDao = AppDataBase.getInstance(application).positionItemDao()
     private val shopItemMapper = ShopItemMapper()
     private val positionItemMapper = PositionItemMapper()
+    private val filesDir = application.filesDir
 
 
     override suspend fun getShopItem(shopItemId: Int): ShopItem {
@@ -44,6 +46,8 @@ class RepositoryImpl(application: Application) :Repository {
             shopItemMapper.mapDbModelListToEntityList(it)
         }
     }
+
+    override fun getPhotoFile(item: ShopItem): File = File(filesDir, shopItemMapper.mapEntityToDbModel(item).photoFileName)
 
 
 
