@@ -1,10 +1,17 @@
 package com.example.shoppingassistant.presentation.noteItem
 
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.media.ExifInterface
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoppingassistant.R
@@ -12,7 +19,9 @@ import com.example.shoppingassistant.databinding.FragmentNoteItemBinding
 import com.example.shoppingassistant.databinding.NoteItemBinding
 import com.example.shoppingassistant.domain.PositionItem
 import com.example.shoppingassistant.domain.ShopItem
+import com.example.shoppingassistant.presentation.noteList.PictureUtils
 import com.example.shoppingassistant.presentation.positionItem.PositionItemFragment
+import java.io.File
 
 
 class NoteItemFragment : Fragment() {
@@ -24,6 +33,8 @@ class NoteItemFragment : Fragment() {
         ViewModelProvider(this)[NoteItemViewModel::class.java]
     }
     private lateinit var onEditingIsFinishedListener: OnEditingIsFinishedListener
+    private lateinit var photoUri: Uri
+    private lateinit var photoFile: File
 
     private var _binding: FragmentNoteItemBinding? = null
     private val binding: FragmentNoteItemBinding
@@ -54,8 +65,66 @@ class NoteItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         chooseRightMode()
         setupViewModelObservers()
+
+        viewModel.shopItem.observe(viewLifecycleOwner){
+            photoFile = viewModel.getPhotoFile(it)
+            photoUri = FileProvider.getUriForFile(
+                requireActivity(),
+                "com.example.shoppingassistant.fileprovider",
+                photoFile
+            )
+            updatePhotoView()
+        }
+
+
+
+        binding.createPhotoButton.apply {
+            val packageManager: PackageManager = requireActivity().packageManager
+            val captureImage = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            val resolvedActivity: ResolveInfo? =
+                packageManager.resolveActivity(captureImage, PackageManager.MATCH_DEFAULT_ONLY)
+            if (resolvedActivity == null) {
+                isEnabled = false
+            }
+
+            setOnClickListener {
+
+                captureImage.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                val cameraActivities: List<ResolveInfo> =
+                    packageManager.queryIntentActivities(
+                        captureImage,
+                        PackageManager.MATCH_DEFAULT_ONLY
+                    )
+                for (cameraActivity in cameraActivities) {
+                    requireActivity().grantUriPermission(
+                        cameraActivity.activityInfo.packageName, photoUri,
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    )
+                }
+
+                startActivityForResult(captureImage, REQUEST_PHOTO)
+            }
+        }
+
     }
 
+    private fun updatePhotoView() {
+        if (photoFile.exists()) {
+            val ei = ExifInterface(photoFile.path)
+            val bitmap =
+                PictureUtils().getRotatedBitmap(
+                    PictureUtils().getScaledBitmap(
+                        photoFile.path,
+                        requireActivity()
+                    ), ei
+                )
+
+            binding.imNoteItemPhoto.setImageBitmap(bitmap)
+        }
+//        else {
+//            binding.imNoteItemPhoto.setImageDrawable(null)
+//        }
+    }
 
     private fun launchEditMode() {
         viewModel.getShopItem(shopItemId)
@@ -140,6 +209,7 @@ class NoteItemFragment : Fragment() {
         private const val MODE_ADD = "mode_add"
         private const val SHOP_ITEM_ID = "ExtraShopItemID"
         private const val SCREEN_MODE_UNDEFINED = ""
+        private const val REQUEST_PHOTO = 101
 
         fun newInstanceAddItem(): Fragment {
             return NoteItemFragment().apply {
