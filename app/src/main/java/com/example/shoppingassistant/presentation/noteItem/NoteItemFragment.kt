@@ -66,15 +66,16 @@ class NoteItemFragment : Fragment() {
         chooseRightMode()
         setupViewModelObservers()
 
-        viewModel.shopItem.observe(viewLifecycleOwner){
-            photoFile = viewModel.getPhotoFile(it)
-            photoUri = FileProvider.getUriForFile(
-                requireActivity(),
-                "com.example.shoppingassistant.fileprovider",
-                photoFile
-            )
-            updatePhotoView()
-        }
+//        viewModel.shopItem.observe(viewLifecycleOwner){
+//            photoFile = viewModel.getPhotoFile(it)
+//            photoUri = FileProvider.getUriForFile(
+//                requireActivity(),
+//                "com.example.shoppingassistant.fileprovider",
+//                photoFile
+//            )
+//            updatePhotoView()
+//        }
+
 
 
 
@@ -104,10 +105,15 @@ class NoteItemFragment : Fragment() {
 
                 startActivityForResult(captureImage, REQUEST_PHOTO)
             }
+           // updatePhotoView()
         }
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        //updatePhotoView()
+    }
     private fun updatePhotoView() {
         if (photoFile.exists()) {
             val ei = ExifInterface(photoFile.path)
@@ -121,14 +127,19 @@ class NoteItemFragment : Fragment() {
 
             binding.imNoteItemPhoto.setImageBitmap(bitmap)
         }
-//        else {
-//            binding.imNoteItemPhoto.setImageDrawable(null)
-//        }
     }
 
     private fun launchEditMode() {
         viewModel.getShopItem(shopItemId)
         viewModel.shopItem.observe(viewLifecycleOwner) {
+            photoFile = viewModel.getPhotoFile(it)
+            photoUri = FileProvider.getUriForFile(
+                requireActivity(),
+                "com.example.shoppingassistant.fileprovider",
+                photoFile
+            )
+            updatePhotoView()
+
             with(binding) {
                 etNoteItemName.setText(it.name)
                 etNoteItemCategory.setText(it.category)
@@ -137,6 +148,7 @@ class NoteItemFragment : Fragment() {
                 tvDate.text = it.date.toString()
             }
         }
+
         binding.saveNoteItemButton.setOnClickListener {
             viewModel.upgradeShopItem(
                 binding.etNoteItemName.text?.toString(),
